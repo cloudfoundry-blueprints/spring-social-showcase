@@ -28,6 +28,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.showcase.account.JdbcAccountRepository;
@@ -50,7 +51,6 @@ public class MainConfig {
 		EmbeddedDatabaseFactory factory = new EmbeddedDatabaseFactory();
 		factory.setDatabaseName("spring-social-showcase");
 		factory.setDatabaseType(EmbeddedDatabaseType.H2);
-		factory.setDatabasePopulator(databasePopulator());
 		return factory.getDatabase();
 	}
 	
@@ -64,13 +64,14 @@ public class MainConfig {
 		return new JdbcTemplate(dataSource());
 	}
 
-	// internal helpers
-
-	private DatabasePopulator databasePopulator() {
+	@Bean
+	public DatabasePopulator databasePopulator() {
 		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
 		populator.addScript(new ClassPathResource("JdbcUsersConnectionRepository.sql", JdbcUsersConnectionRepository.class));
 		populator.addScript(new ClassPathResource("Account.sql", JdbcAccountRepository.class));
 		populator.addScript(new ClassPathResource("data.sql", JdbcAccountRepository.class));
+		
+		DatabasePopulatorUtils.execute(populator, dataSource());
 		return populator;
 	}
 }
