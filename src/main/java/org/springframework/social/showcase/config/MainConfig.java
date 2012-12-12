@@ -71,7 +71,11 @@ public class MainConfig {
 		populator.addScript(new ClassPathResource("Account.sql", JdbcAccountRepository.class));
 		populator.addScript(new ClassPathResource("data.sql", JdbcAccountRepository.class));
 		
-		DatabasePopulatorUtils.execute(populator, dataSource());
+		try {
+			DatabasePopulatorUtils.execute(populator, dataSource());
+		} catch (Exception e) {
+			System.err.println("Caught Exception while populating, assuming tables already exist: " + e.getMessage());
+		}
 		return populator;
 	}
 }
