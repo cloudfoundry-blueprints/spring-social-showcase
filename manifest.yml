@@ -1,0 +1,18 @@
+---
+blueprint:
+  name: "Spring Social Showcase"
+  description: "This sample app demonstrates many of the capabilities of the Spring Social project, including:<ul><li>Connect to Facebook</li><li>Connect to Twitter</li><li>Sign in using Facebook</li><li>Sign in using Twitter</li></ul>"
+  imageURL: http://www.springsource.org/files/imagefield_thumbs/project/images/Project_Social.png
+applications:
+- name: spring-social-showcase
+  framework: spring
+  runtime: java
+  memory: 512M
+  instances: 1
+  url: spring-social-showcase-${random-word}.${target-base}
+  path: target/spring-social-showcase.war
+  services:
+    spring-social-showcase-postgresql:
+      vendor: postgresql
+      version: '9.0'
+      tier: free
