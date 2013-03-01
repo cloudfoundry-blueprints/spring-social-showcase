@@ -4,6 +4,7 @@ blueprint:
   description: "This sample app demonstrates many of the capabilities of the Spring Social project, including:<ul><li>Connect to Facebook</li><li>Connect to Twitter</li><li>Sign in using Facebook</li><li>Sign in using Twitter</li></ul>"
   imageURL: http://www.springsource.org/files/imagefield_thumbs/project/images/Project_Social.png
   browseURL: https://github.com/cloudfoundry-blueprints/spring-social-showcase
+  buildInstructions: "mvn package"
 applications:
 - name: spring-social-showcase
   framework: spring
